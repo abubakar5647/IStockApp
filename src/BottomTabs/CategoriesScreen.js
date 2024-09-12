@@ -4,6 +4,7 @@ import { moderateScale } from 'react-native-size-matters';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCategory, removeCategory } from '../Redux/Slice';
+import Header from '../Components/Header';
 
 const CategoriesScreen = () => {
     const navigation = useNavigation();
@@ -99,22 +100,11 @@ const CategoriesScreen = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.statusBar}>
-                <StatusBar backgroundColor='#f72a4b' barStyle='light-content' />
-
-                <View style={styles.headerContainer}>
-                    <View style={styles.main}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <Image source={require("../assets/Images/back.png")} style={styles.images} />
-                        </TouchableOpacity>
-                        <Text style={styles.text}>Categories</Text>
-                    </View>
-                    <TouchableOpacity style={{ marginRight: moderateScale(20) }}>
-                        <Image source={require("../assets/Images/dots.png")} style={styles.images} />
-                    </TouchableOpacity>
-                </View>
-            </View>
-
+            <Header
+                text='Categories'
+                height={moderateScale(100)}
+                navigation={navigation}
+                enableGoBack={true} />
             <FlatList
                 data={Categories}
                 numColumns={2}
@@ -131,35 +121,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#fdfdfd"
-    },
-    headerContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: moderateScale(10)
-    },
-    main: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginLeft: moderateScale(5),
-        gap: moderateScale(20),
-        marginTop: moderateScale(10)
-    },
-    images: {
-        width: moderateScale(40),
-        height: moderateScale(40),
-        tintColor: 'white'
-    },
-    statusBar: {
-        backgroundColor: '#f72a4b',
-        height: moderateScale(100),
-        borderBottomLeftRadius: moderateScale(30),
-        borderBottomRightRadius: moderateScale(30)
-    },
-    text: {
-        color: 'white',
-        fontSize: moderateScale(18),
-        fontWeight: '500'
     },
     categories: {
         width: moderateScale(100),

@@ -2,8 +2,12 @@ import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, StatusBar,
 import React from 'react'
 import { moderateScale } from 'react-native-size-matters'
 import { useNavigation } from '@react-navigation/native'
+import Button from '../Components/Button'
 
-const VerifyScreen = ({navigation}) => {
+const VerifyScreen = ({ navigation }) => {
+    const handleNavigation = () => {
+        navigation.navigate("BottomTabs")
+    }
     return (
         <ScrollView style={styles.container}>
             <View>
@@ -52,10 +56,10 @@ const VerifyScreen = ({navigation}) => {
                 </View>
 
                 <View style={{ alignItems: 'center', marginTop: moderateScale(30) }}>
-                    <TouchableOpacity style={styles.button}
-                        onPress={() => navigation.navigate("BottomTabs")}>
-                        <Text style={styles.buttonText}>Continue</Text>
-                    </TouchableOpacity>
+                    <Button
+                        onPress={handleNavigation}
+                        text='Continue'
+                        width={moderateScale(170)} />
                 </View>
             </View>
         </ScrollView>
@@ -101,17 +105,5 @@ const styles = StyleSheet.create({
         elevation: 2,
         textAlign: 'center',
         fontSize: moderateScale(25)
-    },
-    button: {
-        width: moderateScale(170),
-        backgroundColor: '#f72a4b',
-        padding: moderateScale(15),
-        alignItems: 'center',
-        borderRadius: moderateScale(30)
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: moderateScale(18),
-        fontWeight: 'bold'
-    },
+    }
 })

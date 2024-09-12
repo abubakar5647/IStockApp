@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, ScrollView, StatusBar, Image, TouchableOpacity,
 import React, { useState } from 'react'
 import { moderateScale } from 'react-native-size-matters'
 import { useNavigation } from '@react-navigation/native'
+import Header from '../Components/Header'
+import Button from '../Components/Button'
 
 const AccountDetails = () => {
     const navigation = useNavigation()
@@ -49,43 +51,27 @@ const AccountDetails = () => {
     };
 
     const handleSubmit = () => {
-        // const isName = handleName();
-        // const isEmail = handleEmail();
-        // const isPassword = handlePassword();
+        const isName = handleName();
+        const isEmail = handleEmail();
+        const isPassword = handlePassword();
 
-        // if (isName && isEmail && isPassword) {
-        //     console.log("Form validation successfull");
-        //     navigation.navigate("VerifyScreen")
-        // } else {
-        //     console.log('Form validation failed');
-        // }
-        navigation.navigate("VerifyScreen")
+        if (isName && isEmail && isPassword) {
+            console.log("Form validation successfull");
+            navigation.navigate("VerifyScreen")
+        } else {
+            console.log('Form validation failed');
+        }
+        // navigation.navigate("VerifyScreen")
     };
 
     return (
         <ScrollView style={styles.container}>
             <View>
-                <View style={styles.statusBar}>
-                    <StatusBar
-                        backgroundColor='#f72a4b'
-                        barStyle='light-content'
-                    />
-
-                    <View style={styles.headerContainer}>
-                        <View style={styles.main}>
-                            <TouchableOpacity>
-                                <Image source={require("../assets/Images/back.png")}
-                                    style={styles.images} />
-                            </TouchableOpacity>
-                            <Text style={styles.text}>Account Details</Text>
-                        </View>
-                        <TouchableOpacity
-                            style={{ marginRight: moderateScale(20) }}>
-                            <Image source={require("../assets/Images/dots.png")}
-                                style={styles.images} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                <Header
+                    text='Account Details'
+                    height={moderateScale(270)}
+                    enableGoBack={false}
+                />
 
                 <View style={styles.infoContainer}>
                     <View style={styles.inputContainer}>
@@ -160,9 +146,7 @@ const AccountDetails = () => {
                     </View>
 
                     <View style={{ alignItems: 'center', marginTop: moderateScale(30) }}>
-                        <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
-                            <Text style={styles.buttonText}>Next</Text>
-                        </TouchableOpacity>
+                        <Button onPress={handleSubmit} text='Next' width={moderateScale(150)} />
                     </View>
                 </View>
             </View>
@@ -176,34 +160,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#f6f7fc"
-    },
-    headerContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: moderateScale(10)
-    },
-    main: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginLeft: moderateScale(5),
-        gap: moderateScale(20)
-    },
-    images: {
-        width: moderateScale(40),
-        height: moderateScale(40),
-        tintColor: 'white'
-    },
-    statusBar: {
-        backgroundColor: '#f72a4b',
-        height: moderateScale(270),
-        borderBottomLeftRadius: moderateScale(30),
-        borderBottomRightRadius: moderateScale(30)
-    },
-    text: {
-        color: 'white',
-        fontSize: moderateScale(18),
-        fontWeight: '500'
     },
     infoContainer: {
         width: "85%",
@@ -220,18 +176,6 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         padding: moderateScale(10)
-    },
-    button: {
-        width: moderateScale(150),
-        backgroundColor: '#f72a4b',
-        padding: moderateScale(15),
-        alignItems: 'center',
-        borderRadius: moderateScale(30)
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: moderateScale(18),
-        fontWeight: 'bold'
     },
     checkBoxConntainer: {
         flexDirection: 'row',
