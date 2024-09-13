@@ -7,61 +7,40 @@ import Button from '../Components/Button'
 
 const AccountDetails = () => {
     const navigation = useNavigation()
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isChecked, setIsChecked] = useState(false);
-    const [nameError, setNameError] = useState('');
-    const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
+    const [formData, setFormData] = useState({
+        name: '', email: '', password: '', isChecked: false, errors: {}
+    });
 
-    const toggleCheckBox = () => {
-        setIsChecked(!isChecked);
+    const handleChange = (field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: value,
+            errors: { ...prev.errors, [field]: '' } 
+        }));
     };
 
-    const handleName = () => {
-        if (name.trim() === '') {
-            setNameError('Name is required');
-            return false
-        } else {
-            setNameError('');
-            return true;
+    const validateForm = () => {
+        const { name, email, password } = formData;
+        let errors = {};
+        if (name.trim() === '') errors.name = 'Name is required';
+        if (email.trim() === '') {
+            errors.email = 'Email is required';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errors.email = 'Invalid email';
         }
-    };
+        if (password.trim() === '') errors.password = 'Password is required';
 
-    const handleEmail = () => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            setEmailError('Invalid email address');
-            return false
-        } else {
-            setEmailError('');
-            return true
-        }
-    };
-
-    const handlePassword = () => {
-        if (password.trim() === '') {
-            setPasswordError('Password is required');
-            return false;
-        } else {
-            setPasswordError('');
-            return true
-        }
+        setFormData(prev => ({ ...prev, errors }));
+        return Object.keys(errors).length === 0;
     };
 
     const handleSubmit = () => {
-        const isName = handleName();
-        const isEmail = handleEmail();
-        const isPassword = handlePassword();
-
-        if (isName && isEmail && isPassword) {
-            console.log("Form validation successfull");
-            navigation.navigate("VerifyScreen")
+        if (validateForm()) {
+            console.log("Form validation successful");
+            navigation.navigate("VerifyScreen");
         } else {
             console.log('Form validation failed');
         }
-        // navigation.navigate("VerifyScreen")
     };
 
     return (
@@ -76,76 +55,55 @@ const AccountDetails = () => {
                 <View style={styles.infoContainer}>
                     <View style={styles.inputContainer}>
                         <Text style={styles.inputHeading}>Your Name</Text>
-                        <View
-                            style={{
-                                borderBottomWidth: moderateScale(0.2),
-                                borderColor: '#b4b4b4b4'
-                            }}>
+                        <View style={styles.inputBox}>
                             <TextInput
                                 placeholder='Enter Your Name'
                                 placeholderTextColor="black"
-                                value={name}
-                                onChangeText={(text) => setName(text)}
-                                onBlur={handleName}
+                                value={formData.name}
+                                onChangeText={(text) => handleChange('name', text)}
+                                onBlur={() => handleChange('name', formData.name)}
                             />
                         </View>
-                        {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
+                        {formData.errors.name && <Text style={styles.errorText}>{formData.errors.name}</Text>}
                     </View>
+
                     <View style={styles.inputContainer}>
                         <Text style={styles.inputHeading}>Your Email</Text>
-                        <View
-                            style={{
-                                borderBottomWidth: moderateScale(0.2),
-                                borderColor: '#b4b4b4b4'
-                            }}>
+                        <View style={styles.inputBox}>
                             <TextInput
                                 placeholder='Enter Your Email'
                                 placeholderTextColor="black"
-                                value={email}
-                                onChangeText={(text) => setEmail(text)}
-                                onBlur={handleEmail}
+                                value={formData.email}
+                                onChangeText={(text) => handleChange('email', text)}
+                                onBlur={() => handleChange('email', formData.email)}
                             />
                         </View>
-                        {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+                        {formData.errors.email && <Text style={styles.errorText}>{formData.errors.email}</Text>}
                     </View>
+
                     <View style={styles.inputContainer}>
                         <Text style={styles.inputHeading}>Create Password</Text>
-                        <View
-                            style={{
-                                borderBottomWidth: moderateScale(0.2),
-                                borderColor: '#b4b4b4b4'
-                            }}>
+                        <View style={styles.inputBox}>
                             <TextInput
                                 placeholder='Enter Your Password'
                                 placeholderTextColor="black"
-                                value={password}
-                                onChangeText={(text) => setPassword(text)}
+                                value={formData.password}
+                                onChangeText={(text) => handleChange('password', text)}
                                 secureTextEntry={true}
-                                onBlur={handlePassword}
+                                onBlur={() => handleChange('password', formData.password)}
                             />
                         </View>
-                        {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+                        {formData.errors.password && <Text style={styles.errorText}>{formData.errors.password}</Text>}
                     </View>
 
-                    <View style={styles.checkBoxConntainer}>
-                        <TouchableOpacity
-                            style={styles.checkBox}
-                            onPress={toggleCheckBox}>
-                            {
-                                isChecked &&
-                                <Image source={require("../assets/Images/true.png")}
-                                    style={{
-                                        width: moderateScale(18), height: moderateScale(18),
-                                        tintColor: '#f72a4b'
-                                    }} />
-                            }
+                    <View style={styles.checkBoxContainer}>
+                        <TouchableOpacity style={styles.checkBox} onPress={() => handleChange('isChecked', !formData.isChecked)}>
+                            {formData.isChecked && <Image source={require("../assets/Images/true.png")} style={styles.checkImage} />}
                         </TouchableOpacity>
-                        <Text style={{ color: '#353535', fontSize: 15, fontWeight: '500' }}>
-                            I Agree term & Condition
-                        </Text>
+                        <Text style={styles.checkboxText}>I Agree to Terms & Conditions</Text>
                     </View>
 
-                    <View style={{ alignItems: 'center', marginTop: moderateScale(30) }}>
+                    <View style={styles.buttonContainer}>
                         <Button onPress={handleSubmit} text='Next' width={moderateScale(150)} />
                     </View>
                 </View>
@@ -177,7 +135,11 @@ const styles = StyleSheet.create({
     inputContainer: {
         padding: moderateScale(10)
     },
-    checkBoxConntainer: {
+    inputBox: {
+        borderBottomWidth: moderateScale(0.2),
+        borderColor: '#b4b4b4b4'
+    },
+    checkBoxContainer: {
         flexDirection: 'row',
         marginLeft: moderateScale(20),
         gap: 10,
@@ -189,6 +151,20 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 1,
         borderColor: '#ff604b',
+    },
+    checkImage: {
+        width: moderateScale(18),
+        height: moderateScale(18),
+        tintColor: '#f72a4b'
+    },
+    checkboxText: {
+        color: '#353535',
+        fontSize: 15,
+        fontWeight: '500'
+    },
+    buttonContainer: {
+        alignItems: 'center',
+        marginTop: moderateScale(30)
     },
     errorText: {
         color: 'red',
