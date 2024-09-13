@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { moderateScale } from 'react-native-size-matters'
 import { useNavigation } from '@react-navigation/native'
 import Header from '../Components/Header'
-import Button from '../Components/Button'
+import { CustomButton } from '../Components/Common'
 
 const AccountDetails = () => {
     const navigation = useNavigation()
@@ -104,7 +104,7 @@ const AccountDetails = () => {
                     </View>
 
                     <View style={styles.buttonContainer}>
-                        <Button onPress={handleSubmit} text='Next' width={moderateScale(150)} />
+                        <CustomButton onPress={handleSubmit} text='Next' width={moderateScale(150)} />
                     </View>
                 </View>
             </View>

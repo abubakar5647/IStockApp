@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import React from 'react'
 import { moderateScale } from 'react-native-size-matters'
 
-const Button = ({ onPress, text, width }) => {
+const CustomButton = ({ onPress, text, width }) => {
     return (
         <View>
             <TouchableOpacity style={[styles.button, { width: width }]} onPress={onPress}>
@@ -12,7 +12,7 @@ const Button = ({ onPress, text, width }) => {
     )
 }
 
-export default Button
+export { CustomButton }
 
 const styles = StyleSheet.create({
     button: {

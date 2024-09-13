@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, StatusBar,
 import React from 'react'
 import { moderateScale } from 'react-native-size-matters'
 import { useNavigation } from '@react-navigation/native'
-import Button from '../Components/Button'
+import { CustomButton } from '../Components/Common'
 
 const VerifyScreen = ({ navigation }) => {
     const handleNavigation = () => {
@@ -56,7 +56,7 @@ const VerifyScreen = ({ navigation }) => {
                 </View>
 
                 <View style={{ alignItems: 'center', marginTop: moderateScale(30) }}>
-                    <Button
+                    <CustomButton
                         onPress={handleNavigation}
                         text='Continue'
                         width={moderateScale(170)} />
