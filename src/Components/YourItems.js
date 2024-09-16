@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { addCategory, removeAllCategory, removeCategory, selectOne } from '../Redux/Slice';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from './Header';
+import { CustomButton } from './Common';
 
 const YourItems = () => {
   const navigation = useNavigation();
@@ -109,7 +110,7 @@ const YourItems = () => {
 
   return (
     <View style={styles.container}>
-      <Header text='Mega Sales' height={moderateScale(100)} navigation={navigation} />
+      <Header text='Mega Sales' height={moderateScale(100)} navigation={navigation} enableGoBack={true} />
 
       <View style={styles.cartContainer}>
         <View style={{
@@ -117,11 +118,7 @@ const YourItems = () => {
           justifyContent: 'space-between',
           width: '100%'
         }}>
-          <TouchableOpacity
-            onPress={selectAll}
-            style={styles.button}>
-            <Text style={{ fontSize: 15, color: 'white' }}>Select All</Text>
-          </TouchableOpacity>
+          <CustomButton text='Select All' onPress={selectAll} width={moderateScale(110)} />
           <View
             style={{
               flexDirection: 'row',
@@ -132,11 +129,10 @@ const YourItems = () => {
               Total:</Text>
             <Text style={styles.newPrice}>${getTotalSum()}</Text>
           </View>
-          <TouchableOpacity
+          <CustomButton
+            text='Delete All' width={moderateScale(110)}
             onPress={() => { removeAll() }}
-            style={styles.button}>
-            <Text style={{ fontSize: 15, color: 'white' }}>Delete All</Text>
-          </TouchableOpacity>
+          />
         </View>
       </View>
 
@@ -162,7 +158,7 @@ const styles = StyleSheet.create({
   },
   cartContainer: {
     flexDirection: 'row',
-    marginHorizontal: moderateScale(20),
+    marginHorizontal: moderateScale(15),
     justifyContent: 'space-between',
     marginTop: moderateScale(25),
     paddingBottom: 10
@@ -225,12 +221,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: moderateScale(20),
     marginVertical: moderateScale(10)
-  },
-  button: {
-    backgroundColor: '#f72a4b',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 5,
-    padding: moderateScale(5)
   },
 });

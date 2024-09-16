@@ -18,7 +18,7 @@ const AccountDetails = () => {
             errors: { ...prev.errors, [field]: '' } 
         }));
     };
-
+ 
     const validateForm = () => {
         const { name, email, password } = formData;
         let errors = {};
